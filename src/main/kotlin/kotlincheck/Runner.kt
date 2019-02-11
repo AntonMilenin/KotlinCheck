@@ -33,42 +33,41 @@ fun main(args: Array<String>) {
         return
     var seed: Long = 1
     var minSuccesfulTest = 100
-    var minSize = 0
+    var minSize = 20
     var maxSize = 100
     var workers = 5
-    if (args.size > 1)
-        for (i in 1..args.size) {
-            val split = args[i].split("=")
-            if (split.size != 2)
-                continue
-            when (split[0]) {
-                "seed" -> try {
-                    seed = split[1].toLong()
-                } catch (e: NumberFormatException) {
-                    printOnNumberFormatException(split[0])
-                }
-                "minSuccesfulTest" -> try {
-                    minSuccesfulTest = split[1].toInt()
-                } catch (e: NumberFormatException) {
-                    printOnNumberFormatException(split[0])
-                }
-                "minSize" -> try {
-                    minSize = split[1].toInt()
-                } catch (e: NumberFormatException) {
-                    printOnNumberFormatException(split[0])
-                }
-                "maxSize" -> try {
-                    maxSize = split[1].toInt()
-                } catch (e: NumberFormatException) {
-                    printOnNumberFormatException(split[0])
-                }
-                "workers" -> try {
-                    workers = split[1].toInt()
-                } catch (e: NumberFormatException) {
-                    printOnNumberFormatException(split[0])
-                }
+    for (i in 1..(args.size - 1)) {
+        val split = args[i].split("=")
+        if (split.size != 2)
+            continue
+        when (split[0]) {
+            "seed" -> try {
+                seed = split[1].toLong()
+            } catch (e: NumberFormatException) {
+                printOnNumberFormatException(split[0])
+            }
+            "minSuccesfulTest" -> try {
+                minSuccesfulTest = split[1].toInt()
+            } catch (e: NumberFormatException) {
+                printOnNumberFormatException(split[0])
+            }
+            "minSize" -> try {
+                minSize = split[1].toInt()
+            } catch (e: NumberFormatException) {
+                printOnNumberFormatException(split[0])
+            }
+            "maxSize" -> try {
+                maxSize = split[1].toInt()
+            } catch (e: NumberFormatException) {
+                printOnNumberFormatException(split[0])
+            }
+            "workers" -> try {
+                workers = split[1].toInt()
+            } catch (e: NumberFormatException) {
+                printOnNumberFormatException(split[0])
             }
         }
+    }
     Test.params = Test.Parameters(seed, minSuccesfulTest, minSize, maxSize, workers)
     Runner().loadClasses(args[0])
 }
